@@ -109,34 +109,14 @@ QFont QsciLexerBatch::defaultFont(int style) const
 
     switch (style)
     {
-    case Comment:
-#if defined(Q_OS_WIN)
-        f = QFont("Comic Sans MS",9);
-#elif defined(Q_OS_MAC)
-        f = QFont("Comic Sans MS", 12);
-#else
-        f = QFont("Bitstream Vera Serif",9);
-#endif
-        break;
 
     case Keyword:
-        f = QsciLexer::defaultFont(style);
-        f.setBold(true);
-        break;
-
-    case ExternalCommand:
-#if defined(Q_OS_WIN)
-        f = QFont("Courier New",10);
-#elif defined(Q_OS_MAC)
-        f = QFont("Courier", 12);
-#else
-        f = QFont("Bitstream Vera Sans Mono",9);
-#endif
+        f = QsciLexer::defaultFont();
         f.setBold(true);
         break;
 
     default:
-        f = QsciLexer::defaultFont(style);
+        f = QsciLexer::defaultFont();
     }
 
     return f;

@@ -90,7 +90,7 @@ public:
     bool defaultEolFill(int style) const;
 
     //! Returns the font for style number \a style.
-    QFont defaultFont(int style) const;
+    QFont defaultFont(int style) const override;
 
     //! Returns the background colour of the text for style number \a style.
     //!

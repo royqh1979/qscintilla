@@ -25,7 +25,6 @@
 #include <qsettings.h>
 
 #include "Qsci/qscilexerjavascript.h"
-#include "Qsci/qscilexerpython.h"
 
 
 // The ctor.
@@ -301,26 +300,7 @@ QFont QsciLexerHTML::defaultFont(int style) const
 
     switch (style)
     {
-    case Default:
-    case Entity:
-#if defined(Q_OS_WIN)
-        f = QFont("Times New Roman",11);
-#elif defined(Q_OS_MAC)
-        f = QFont("Times New Roman", 12);
-#else
-        f = QFont("Bitstream Charter",10);
-#endif
-        break;
 
-    case HTMLComment:
-#if defined(Q_OS_WIN)
-        f = QFont("Verdana",9);
-#elif defined(Q_OS_MAC)
-        f = QFont("Verdana", 12);
-#else
-        f = QFont("Bitstream Vera Sans",8);
-#endif
-        break;
 
     case SGMLCommand:
     case PythonKeyword:
@@ -331,7 +311,7 @@ QFont QsciLexerHTML::defaultFont(int style) const
     case ASPPythonClassName:
     case ASPPythonFunctionMethodName:
     case ASPPythonOperator:
-        f = QsciLexer::defaultFont(style);
+        f = QsciLexer::defaultFont();
         f.setBold(true);
         break;
 
@@ -343,106 +323,30 @@ QFont QsciLexerHTML::defaultFont(int style) const
     case ASPJavaScriptCommentDoc:
     case ASPJavaScriptKeyword:
     case ASPJavaScriptSymbol:
-#if defined(Q_OS_WIN)
-        f = QFont("Comic Sans MS",9);
-#elif defined(Q_OS_MAC)
-        f = QFont("Comic Sans MS", 12);
-#else
-        f = QFont("Bitstream Vera Serif",9);
-#endif
+        f = QsciLexer::defaultFont();
         f.setBold(true);
-        break;
-
-    case JavaScriptComment:
-    case JavaScriptCommentLine:
-    case JavaScriptNumber:
-    case JavaScriptWord:
-    case JavaScriptDoubleQuotedString:
-    case JavaScriptSingleQuotedString:
-    case ASPJavaScriptComment:
-    case ASPJavaScriptCommentLine:
-    case ASPJavaScriptNumber:
-    case ASPJavaScriptWord:
-    case ASPJavaScriptDoubleQuotedString:
-    case ASPJavaScriptSingleQuotedString:
-    case VBScriptComment:
-    case ASPVBScriptComment:
-    case PythonComment:
-    case ASPPythonComment:
-    case PHPComment:
-#if defined(Q_OS_WIN)
-        f = QFont("Comic Sans MS",9);
-#elif defined(Q_OS_MAC)
-        f = QFont("Comic Sans MS", 12);
-#else
-        f = QFont("Bitstream Vera Serif",9);
-#endif
-        break;
-
-    case VBScriptDefault:
-    case VBScriptNumber:
-    case VBScriptString:
-    case VBScriptIdentifier:
-    case VBScriptUnclosedString:
-    case ASPVBScriptDefault:
-    case ASPVBScriptNumber:
-    case ASPVBScriptString:
-    case ASPVBScriptIdentifier:
-    case ASPVBScriptUnclosedString:
-#if defined(Q_OS_WIN)
-        f = QFont("Lucida Sans Unicode",9);
-#elif defined(Q_OS_MAC)
-        f = QFont("Lucida Grande", 12);
-#else
-        f = QFont("Bitstream Vera Serif",9);
-#endif
         break;
 
     case VBScriptKeyword:
     case ASPVBScriptKeyword:
-#if defined(Q_OS_WIN)
-        f = QFont("Lucida Sans Unicode",9);
-#elif defined(Q_OS_MAC)
-        f = QFont("Lucida Grande", 12);
-#else
-        f = QFont("Bitstream Vera Serif",9);
-#endif
+        f = QsciLexer::defaultFont();
         f.setBold(true);
-        break;
-
-    case PythonDoubleQuotedString:
-    case PythonSingleQuotedString:
-    case ASPPythonDoubleQuotedString:
-    case ASPPythonSingleQuotedString:
-#if defined(Q_OS_WIN)
-        f = QFont("Courier New",10);
-#elif defined(Q_OS_MAC)
-        f = QFont("Courier New", 12);
-#else
-        f = QFont("Bitstream Vera Sans Mono",9);
-#endif
         break;
 
     case PHPKeyword:
     case PHPVariable:
     case PHPDoubleQuotedVariable:
-        f = QsciLexer::defaultFont(style);
+        f = QsciLexer::defaultFont();
         f.setItalic(true);
         break;
 
     case PHPCommentLine:
-#if defined(Q_OS_WIN)
-        f = QFont("Comic Sans MS",9);
-#elif defined(Q_OS_MAC)
-        f = QFont("Comic Sans MS", 12);
-#else
-        f = QFont("Bitstream Vera Serif",9);
-#endif
+        f = QsciLexer::defaultFont();
         f.setItalic(true);
         break;
 
     default:
-        f = QsciLexer::defaultFont(style);
+        f = QsciLexer::defaultFont();
     }
 
     return f;
@@ -526,8 +430,9 @@ const char *QsciLexerHTML::keywords(int set) const
             "preserve private property public redim single static "
             "string type variant";
 
+    // QsciLexerPython::keywordClass;
     if (set == 4)
-        return QsciLexerPython::keywordClass;
+        return "";
 
     if (set == 5)
         return

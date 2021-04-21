@@ -218,44 +218,25 @@ SOURCES = \
     qscicommandset.cpp \
     qscidocument.cpp \
     qscilexer.cpp \
-    qscilexeravs.cpp \
     qscilexerbash.cpp \
     qscilexerbatch.cpp \
     qscilexercmake.cpp \
-    qscilexercoffeescript.cpp \
     qscilexercpp.cpp \
-    qscilexercsharp.cpp \
     qscilexercss.cpp \
     qscilexercustom.cpp \
-    qscilexerd.cpp \
     qscilexerdiff.cpp \
     qscilexeredifact.cpp \
-    qscilexerfortran.cpp \
-    qscilexerfortran77.cpp \
     qscilexerhtml.cpp \
     qscilexeridl.cpp \
-    qscilexerjava.cpp \
     qscilexerjavascript.cpp \
     qscilexerjson.cpp \
     qscilexerlua.cpp \
     qscilexermakefile.cpp \
     qscilexermarkdown.cpp \
-    qscilexermatlab.cpp \
-    qscilexeroctave.cpp \
-    qscilexerpascal.cpp \
-    qscilexerperl.cpp \
-    qscilexerpostscript.cpp \
     qscilexerpo.cpp \
-    qscilexerpov.cpp \
     qscilexerproperties.cpp \
-    qscilexerpython.cpp \
-    qscilexerruby.cpp \
-    qscilexerspice.cpp \
     qscilexersql.cpp \
-    qscilexertcl.cpp \
     qscilexertex.cpp \
-    qscilexerverilog.cpp \
-    qscilexervhdl.cpp \
     qscilexerxml.cpp \
     qscilexeryaml.cpp \
     qscimacro.cpp \

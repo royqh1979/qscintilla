@@ -104,47 +104,25 @@ QFont QsciLexerYAML::defaultFont(int style) const
 
     switch (style)
     {
-    case Default:
-    case TextBlockMarker:
-#if defined(Q_OS_WIN)
-        f = QFont("Times New Roman", 11);
-#elif defined(Q_OS_MAC)
-        f = QFont("Times New Roman", 12);
-#else
-        f = QFont("Bitstream Charter", 10);
-#endif
-        break;
 
     case Identifier:
-        f = QsciLexer::defaultFont(style);
+        f = QsciLexer::defaultFont();
         f.setBold(true);
         break;
 
     case DocumentDelimiter:
-#if defined(Q_OS_WIN)
-        f = QFont("Comic Sans MS",9);
-#elif defined(Q_OS_MAC)
-        f = QFont("Comic Sans MS", 12);
-#else
-        f = QFont("Bitstream Vera Serif",9);
-#endif
+        f = QsciLexer::defaultFont();
         f.setBold(true);
         break;
 
     case SyntaxErrorMarker:
-#if defined(Q_OS_WIN)
-        f = QFont("Times New Roman", 11);
-#elif defined(Q_OS_MAC)
-        f = QFont("Times New Roman", 12);
-#else
-        f = QFont("Bitstream Charter", 10);
-#endif
+        f = QsciLexer::defaultFont();
         f.setBold(true);
         f.setItalic(true);
         break;
 
     default:
-        f = QsciLexer::defaultFont(style);
+        f = QsciLexer::defaultFont();
     }
 
     return f;

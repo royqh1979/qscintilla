@@ -100,20 +100,7 @@ bool QsciLexerMakefile::defaultEolFill(int style) const
 // Returns the font of the text for a style.
 QFont QsciLexerMakefile::defaultFont(int style) const
 {
-    QFont f;
-
-    if (style == Comment)
-#if defined(Q_OS_WIN)
-        f = QFont("Comic Sans MS",9);
-#elif defined(Q_OS_MAC)
-        f = QFont("Comic Sans MS", 12);
-#else
-        f = QFont("Bitstream Vera Serif",9);
-#endif
-    else
-        f = QsciLexer::defaultFont(style);
-
-    return f;
+    return QsciLexer::defaultFont();
 }
 
 

@@ -133,27 +133,7 @@ bool QsciLexerLua::defaultEolFill(int style) const
 // Returns the font of the text for a style.
 QFont QsciLexerLua::defaultFont(int style) const
 {
-    QFont f;
-
-    switch (style)
-    {
-    case Comment:
-    case LineComment:
-    case LiteralString:
-#if defined(Q_OS_WIN)
-        f = QFont("Comic Sans MS",9);
-#elif defined(Q_OS_MAC)
-        f = QFont("Comic Sans MS", 12);
-#else
-        f = QFont("Bitstream Vera Serif",9);
-#endif
-        break;
-
-    default:
-        f = QsciLexer::defaultFont(style);
-    }
-
-    return f;
+    return QsciLexer::defaultFont();
 }
 
 

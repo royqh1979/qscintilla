@@ -126,13 +126,13 @@ QFont QsciLexerMarkdown::defaultFont(int style) const
     {
     case StrongEmphasisAsterisks:
     case StrongEmphasisUnderscores:
-        f = QsciLexer::defaultFont(style);
+        f = QsciLexer::defaultFont();
         f.setBold(true);
         break;
 
     case EmphasisAsterisks:
     case EmphasisUnderscores:
-        f = QsciLexer::defaultFont(style);
+        f = QsciLexer::defaultFont();
         f.setItalic(true);
         break;
 
@@ -142,36 +142,17 @@ QFont QsciLexerMarkdown::defaultFont(int style) const
     case Header4:
     case Header5:
     case Header6:
-#if defined(Q_OS_WIN)
-        f = QFont("Courier New", 10);
-#elif defined(Q_OS_MAC)
-        f = QFont("Courier", 12);
-#else
-        f = QFont("Bitstream Vera Sans Mono", 9);
-#endif
+        f = QsciLexer::defaultFont();
         f.setBold(true);
         break;
 
-    case HorizontalRule:
-    case CodeBackticks:
-    case CodeDoubleBackticks:
-    case CodeBlock:
-#if defined(Q_OS_WIN)
-        f = QFont("Courier New", 10);
-#elif defined(Q_OS_MAC)
-        f = QFont("Courier", 12);
-#else
-        f = QFont("Bitstream Vera Sans Mono", 9);
-#endif
-        break;
-
     case Link:
-        f = QsciLexer::defaultFont(style);
+        f = QsciLexer::defaultFont();
         f.setUnderline(true);
         break;
 
     default:
-        f = QsciLexer::defaultFont(style);
+        f = QsciLexer::defaultFont();
     }
 
     return f;

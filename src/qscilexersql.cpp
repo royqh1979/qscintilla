@@ -138,37 +138,10 @@ QFont QsciLexerSQL::defaultFont(int style) const
 
     switch (style)
     {
-    case Comment:
-    case CommentLine:
-    case PlusComment:
-    case CommentLineHash:
-    case CommentDocKeyword:
-    case CommentDocKeywordError:
-#if defined(Q_OS_WIN)
-        f = QFont("Comic Sans MS",9);
-#elif defined(Q_OS_MAC)
-        f = QFont("Comic Sans MS", 12);
-#else
-        f = QFont("Bitstream Vera Serif",9);
-#endif
-        break;
-
     case Keyword:
     case Operator:
-        f = QsciLexer::defaultFont(style);
+        f = QsciLexer::defaultFont();
         f.setBold(true);
-        break;
-
-    case DoubleQuotedString:
-    case SingleQuotedString:
-    case PlusPrompt:
-#if defined(Q_OS_WIN)
-        f = QFont("Courier New",10);
-#elif defined(Q_OS_MAC)
-        f = QFont("Courier", 12);
-#else
-        f = QFont("Bitstream Vera Sans Mono",9);
-#endif
         break;
 
     default:

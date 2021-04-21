@@ -68,25 +68,7 @@ QColor QsciLexerPO::defaultColor(int style) const
 // Returns the font of the text for a style.
 QFont QsciLexerPO::defaultFont(int style) const
 {
-    QFont f;
-
-    switch (style)
-    {
-    case Comment:
-#if defined(Q_OS_WIN)
-        f = QFont("Comic Sans MS", 9);
-#elif defined(Q_OS_MAC)
-        f = QFont("Georgia", 13);
-#else
-        f = QFont("Bitstream Vera Serif", 9);
-#endif
-        break;
-
-    default:
-        f = QsciLexer::defaultFont(style);
-    }
-
-    return f;
+    return QsciLexer::defaultFont();
 }
 
 

@@ -257,62 +257,17 @@ QFont QsciLexerCPP::defaultFont(int style) const
 
     switch (style)
     {
-    case Comment:
-    case InactiveComment:
-    case CommentLine:
-    case InactiveCommentLine:
-    case CommentDoc:
-    case InactiveCommentDoc:
-    case CommentLineDoc:
-    case InactiveCommentLineDoc:
-    case CommentDocKeyword:
-    case InactiveCommentDocKeyword:
-    case CommentDocKeywordError:
-    case InactiveCommentDocKeywordError:
-    case TaskMarker:
-    case InactiveTaskMarker:
-#if defined(Q_OS_WIN)
-        f = QFont("Comic Sans MS",9);
-#elif defined(Q_OS_MAC)
-        f = QFont("Comic Sans MS", 12);
-#else
-        f = QFont("Bitstream Vera Serif",9);
-#endif
-        break;
 
     case Keyword:
     case InactiveKeyword:
     case Operator:
     case InactiveOperator:
-        f = QsciLexer::defaultFont(style);
+        f = QsciLexer::defaultFont();
         f.setBold(true);
         break;
 
-    case DoubleQuotedString:
-    case InactiveDoubleQuotedString:
-    case SingleQuotedString:
-    case InactiveSingleQuotedString:
-    case UnclosedString:
-    case InactiveUnclosedString:
-    case VerbatimString:
-    case InactiveVerbatimString:
-    case Regex:
-    case InactiveRegex:
-    case TripleQuotedVerbatimString:
-    case InactiveTripleQuotedVerbatimString:
-    case HashQuotedString:
-    case InactiveHashQuotedString:
-#if defined(Q_OS_WIN)
-        f = QFont("Courier New",10);
-#elif defined(Q_OS_MAC)
-        f = QFont("Courier", 12);
-#else
-        f = QFont("Bitstream Vera Sans Mono",9);
-#endif
-        break;
-
     default:
-        f = QsciLexer::defaultFont(style);
+        f = QsciLexer::defaultFont();
     }
 
     return f;

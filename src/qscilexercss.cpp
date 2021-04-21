@@ -137,30 +137,19 @@ QFont QsciLexerCSS::defaultFont(int style) const
 {
     QFont f;
 
-    if (style == Comment)
-#if defined(Q_OS_WIN)
-        f = QFont("Comic Sans MS",9);
-#elif defined(Q_OS_MAC)
-        f = QFont("Comic Sans MS", 12);
-#else
-        f = QFont("Bitstream Vera Serif",9);
-#endif
-    else
+    f = QsciLexer::defaultFont();
+
+    switch (style)
     {
-        f = QsciLexer::defaultFont(style);
+    case Tag:
+    case Important:
+    case MediaRule:
+        f.setBold(true);
+        break;
 
-        switch (style)
-        {
-        case Tag:
-        case Important:
-        case MediaRule:
-            f.setBold(true);
-            break;
-
-        case IDSelector:
-            f.setItalic(true);
-            break;
-        }
+    case IDSelector:
+        f.setItalic(true);
+        break;
     }
 
     return f;

@@ -77,15 +77,6 @@ bool QsciLexerJavaScript::defaultEolFill(int style) const
 // Returns the font of the text for a style.
 QFont QsciLexerJavaScript::defaultFont(int style) const
 {
-    if (style == Regex)
-#if defined(Q_OS_WIN)
-        return QFont("Courier New",10);
-#elif defined(Q_OS_MAC)
-        return QFont("Courier", 12);
-#else
-        return QFont("Bitstream Vera Sans Mono",9);
-#endif
-
     return QsciLexerCPP::defaultFont(style);
 }
 

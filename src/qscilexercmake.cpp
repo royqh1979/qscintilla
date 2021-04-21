@@ -98,27 +98,18 @@ QFont QsciLexerCMake::defaultFont(int style) const
 
     switch (style)
     {
-    case Comment:
-#if defined(Q_OS_WIN)
-        f = QFont("Comic Sans MS",9);
-#elif defined(Q_OS_MAC)
-        f = QFont("Comic Sans MS", 12);
-#else
-        f = QFont("Bitstream Vera Serif",9);
-#endif
-        break;
 
     case Function:
     case BlockWhile:
     case BlockForeach:
     case BlockIf:
     case BlockMacro:
-        f = QsciLexer::defaultFont(style);
+        f = QsciLexer::defaultFont();
         f.setBold(true);
         break;
 
     default:
-        f = QsciLexer::defaultFont(style);
+        f = QsciLexer::defaultFont();
     }
 
     return f;

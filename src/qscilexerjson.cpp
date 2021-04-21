@@ -119,17 +119,17 @@ QFont QsciLexerJSON::defaultFont(int style) const
     switch (style)
     {
     case CommentLine:
-        f = QsciLexer::defaultFont(style);
+        f = QsciLexer::defaultFont();
         f.setItalic(true);
         break;
 
     case Keyword:
-        f = QsciLexer::defaultFont(style);
+        f = QsciLexer::defaultFont();
         f.setBold(true);
         break;
 
     default:
-        f = QsciLexer::defaultFont(style);
+        f = QsciLexer::defaultFont();
     }
 
     return f;

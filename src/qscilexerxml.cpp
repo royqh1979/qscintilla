@@ -134,27 +134,15 @@ QFont QsciLexerXML::defaultFont(int style) const
 
     switch (style)
     {
-    case Default:
-    case Entity:
-    case CDATA:
-#if defined(Q_OS_WIN)
-        f = QFont("Times New Roman",11);
-#elif defined(Q_OS_MAC)
-        f = QFont("Times New Roman", 12);
-#else
-        f = QFont("Bitstream Charter",10);
-#endif
-        break;
-
     case XMLStart:
     case XMLEnd:
     case SGMLCommand:
-        f = QsciLexer::defaultFont(style);
+        f = QsciLexer::defaultFont();
         f.setBold(true);
         break;
 
     default:
-        f = QsciLexerHTML::defaultFont(style);
+        f = QsciLexer::defaultFont();
     }
 
     return f;
