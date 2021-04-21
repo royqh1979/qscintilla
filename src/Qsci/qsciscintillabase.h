@@ -2383,6 +2383,11 @@ public:
 
         //!
         SCI_GETDOCUMENTOPTIONS = 2379,
+
+        SCI_CUSTOM  = 20000,
+        SCI_CUSTOM_INDENT = 20001,
+        SCI_CUSTOM_UNINDENT = 20002,
+
     };
 
 	enum

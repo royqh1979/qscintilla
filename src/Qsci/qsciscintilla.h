@@ -1695,6 +1695,11 @@ public slots:
     //! \sa unindent()
     virtual void indent(int line);
 
+    //! Increases the indentation of the current selected block.
+    //!
+    //! \sa unindent()
+    virtual void indent();
+
     //! Insert the text \a text at the current position.
     virtual void insert(const QString &text);
 
@@ -2038,6 +2043,11 @@ public slots:
     //!
     //! \sa indent()
     virtual void unindent(int line);
+
+    //! Decreases the indentation of the current selected block.
+    //!
+    //! \sa indent()
+    virtual void unindent();
 
     //! Zooms in on the text by by making the base font size \a range points
     //! larger and recalculating all font sizes.

@@ -2492,6 +2492,13 @@ void QsciScintilla::indent(int line)
     setIndentation(line, indentation(line) + indentWidth());
 }
 
+void QsciScintilla::indent()
+{
+    SendScintilla(SCI_BEGINUNDOACTION);
+    SendScintilla(SCI_CUSTOM_INDENT);
+    SendScintilla(SCI_ENDUNDOACTION);
+}
+
 
 // Unindent a line.
 void QsciScintilla::unindent(int line)
@@ -2502,6 +2509,13 @@ void QsciScintilla::unindent(int line)
         newIndent = 0;
 
     setIndentation(line, newIndent);
+}
+
+void QsciScintilla::unindent()
+{
+    SendScintilla(SCI_BEGINUNDOACTION);
+    SendScintilla(SCI_CUSTOM_UNINDENT);
+    SendScintilla(SCI_ENDUNDOACTION);
 }
 
 

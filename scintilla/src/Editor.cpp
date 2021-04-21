@@ -6534,6 +6534,14 @@ sptr_t Editor::WndProc(unsigned int iMessage, uptr_t wParam, sptr_t lParam) {
 	case SCI_GETINDENT:
 		return pdoc->indentInChars;
 
+    case SCI_CUSTOM_INDENT:
+        this->Indent(true);
+        break;
+
+    case SCI_CUSTOM_UNINDENT:
+        this->Indent(false);
+        break;
+
 	case SCI_SETUSETABS:
 		pdoc->useTabs = wParam != 0;
 		InvalidateStyleRedraw();
