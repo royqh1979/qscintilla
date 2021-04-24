@@ -278,7 +278,7 @@ void LineMarker::Draw(Surface *surface, PRectangle &rcWhole, Font &fontForCharac
 
 	} else if (markType == SC_MARK_BOXPLUS) {
 		DrawBox(surface, centreX, centreY, blobSize, fore, colourHead);
-		DrawPlus(surface, centreX, centreY, blobSize, colourTail);
+        DrawPlus(surface, centreX, centreY, blobSize, colourTail);
 
 	} else if (markType == SC_MARK_BOXPLUSCONNECTED) {
 		if (tFold == LineMarker::headWithTail)

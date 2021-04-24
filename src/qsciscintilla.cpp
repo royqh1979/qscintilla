@@ -40,6 +40,7 @@
 #include "Qsci/qscilexer.h"
 #include "Qsci/qscistyle.h"
 #include "Qsci/qscistyledtext.h"
+#include <QDebug>
 
 
 // Make sure these match the values in Scintilla.h.  We don't #include that
@@ -1651,7 +1652,7 @@ void QsciScintilla::handleModified(int pos, int mtype, const char *text,
         int len, int added, int line, int foldNow, int foldPrev, int token,
         int annotationLinesAdded)
 {
-    Q_UNUSED(pos);
+//    Q_UNUSED(pos);
     Q_UNUSED(text);
     Q_UNUSED(len);
     Q_UNUSED(token);
@@ -1667,8 +1668,11 @@ void QsciScintilla::handleModified(int pos, int mtype, const char *text,
     {
         emit textChanged();
 
-        if (added != 0)
-            emit linesChanged();
+        if (added != 0) {
+            int startLine,startIndex;
+            lineIndexFromPosition(pos, &startLine, &startIndex);
+            emit linesChanged(startLine,added);
+        }
     }
 }
 
@@ -1710,6 +1714,95 @@ void QsciScintilla::zoomTo(int size)
         size = 20;
 
     SendScintilla(SCI_SETZOOM, size);
+}
+
+void QsciScintilla::toggleComment()
+{
+    qDebug() << "heihei";
+    if (hasSelectedText()) {
+        int lineFrom,indexFrom,lineTo, indexTo, oldLineTo;
+        getSelection(&lineFrom,&indexFrom, &lineTo, &indexTo);
+        oldLineTo = lineTo;
+        if (indexTo==0) {
+            lineTo-=1;
+        }
+        int cursorLine, cursorIndex;
+        getCursorPosition(&cursorLine, &cursorIndex);
+        bool allHasComment = true;
+        bool allNoComment = true;
+        for (int i=lineFrom;i<=lineTo;i++){
+            QString s = text(i);
+            allHasComment = allHasComment && s.startsWith("//");
+            allNoComment = allNoComment && (!s.startsWith("//"));
+        }
+        if (allHasComment) {
+            // remove comments
+            beginUndoAction();
+            for (int i=lineFrom;i<=lineTo;i++){
+                int start = lineStart(i);
+                int end = lineEnd(i);
+                QString s = text(i).trimmed().mid(2);
+                setSelection(start,end);
+                replaceSelectedText(s);
+            }
+            indexFrom -=2;
+            indexTo -= 2;
+            setSelection(lineFrom,indexFrom,oldLineTo,indexTo);
+            endUndoAction();
+        }
+        if (allNoComment) {
+            // add comments
+            beginUndoAction();
+            for (int i=lineFrom;i<=lineTo;i++){
+                int start = lineStart(i);
+                int end = lineEnd(i);
+                QString s = QString("//"+text(i)).trimmed();
+                setSelection(start,end);
+                replaceSelectedText(s);
+            }
+            if (indexFrom !=0) {
+                indexFrom +=2;
+            }
+            if (indexTo!=0) {
+                indexTo += 2;
+            }
+            setSelection(lineFrom,indexFrom,oldLineTo,indexTo);
+            endUndoAction();
+        }
+    } else {
+        qDebug()<<"lala";
+        int line,index,pos;
+        getCursorPosition(&line, &index);
+        pos = positionFromLineIndex(line,index);
+        QString s = text(line).trimmed();
+        if (!s.startsWith("/*")) {
+            int start = lineIndentPosition(line);
+            int end = lineEnd(line);
+            qDebug() << start << end << lineStart(line);
+            int new_pos=-1;
+            if (s.startsWith("//")) {
+                s = s.mid(2);
+                if (pos > start+2) {
+                    new_pos = pos - 2;
+                } else if (pos>=start) {
+                    new_pos = start;
+                }
+            } else {
+                s = "//"+s;
+                if (pos >= start) {
+                    new_pos = pos + 2;
+                }
+            }
+            beginUndoAction();
+            setSelection(start,end);
+            replaceSelectedText(s);
+            if (new_pos > 0) {
+                setCursorPosition(new_pos);
+            }
+            endUndoAction();
+        }
+
+    }
 }
 
 
@@ -2027,7 +2120,12 @@ void QsciScintilla::setSelection(int lineFrom, int indexFrom, int lineTo,
         int indexTo)
 {
     SendScintilla(SCI_SETSEL, positionFromLineIndex(lineFrom, indexFrom),
-            positionFromLineIndex(lineTo, indexTo));
+                  positionFromLineIndex(lineTo, indexTo));
+}
+
+void QsciScintilla::setSelection(int posFrom, int posTo)
+{
+    SendScintilla(SCI_SETSEL, posFrom, posTo);
 }
 
 
@@ -2268,6 +2366,21 @@ int QsciScintilla::lines() const
     return SendScintilla(SCI_GETLINECOUNT);
 }
 
+int QsciScintilla::lineEnd(int line) const
+{
+    return SendScintilla(SCI_GETLINEENDPOSITION,line);
+}
+
+int QsciScintilla::lineIndentPosition(int line) const
+{
+    return SendScintilla(SCI_GETLINEINDENTPOSITION,line);
+}
+
+int QsciScintilla::lineStart(int line) const
+{
+    return SendScintilla(SCI_POSITIONFROMLINE,line);
+}
+
 
 // Return the line at a position.
 int QsciScintilla::lineAt(const QPoint &pos) const
@@ -2405,11 +2518,21 @@ void QsciScintilla::getCursorPosition(int *line, int *index) const
     lineIndexFromPosition(SendScintilla(SCI_GETCURRENTPOS), line, index);
 }
 
+int QsciScintilla::getCursorPosition() const
+{
+    return SendScintilla(SCI_GETCURRENTPOS);
+}
+
 
 // Set the cursor position
 void QsciScintilla::setCursorPosition(int line, int index)
 {
     SendScintilla(SCI_GOTOPOS, positionFromLineIndex(line, index));
+}
+
+void QsciScintilla::setCursorPosition(int pos)
+{
+    SendScintilla(SCI_GOTOPOS, pos);
 }
 
 
@@ -2495,7 +2618,7 @@ void QsciScintilla::indent(int line)
 void QsciScintilla::indent()
 {
     SendScintilla(SCI_BEGINUNDOACTION);
-    SendScintilla(SCI_CUSTOM_INDENT);
+    SendScintilla(SCI_TAB);
     SendScintilla(SCI_ENDUNDOACTION);
 }
 
@@ -2514,7 +2637,7 @@ void QsciScintilla::unindent(int line)
 void QsciScintilla::unindent()
 {
     SendScintilla(SCI_BEGINUNDOACTION);
-    SendScintilla(SCI_CUSTOM_UNINDENT);
+    SendScintilla(SCI_BACKTAB);
     SendScintilla(SCI_ENDUNDOACTION);
 }
 

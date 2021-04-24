@@ -2092,7 +2092,7 @@ void EditView::PaintText(Surface *surfaceWindow, const EditModel &model, PRectan
 						surface->FillRectangle(rcSpacer, vsDraw.styles[STYLE_DEFAULT].back);
 					}
 
-					DrawLine(surface, model, vsDraw, ll, lineDoc, visibleLine, xStart, rcLine, subLine, phase);
+                    DrawLine(surface, model, vsDraw, ll, lineDoc, visibleLine, xStart, rcLine, subLine, phase);
 #if defined(TIME_PAINTING)
 					durPaint += ep.Duration(true);
 #endif

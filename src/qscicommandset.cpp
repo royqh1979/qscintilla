@@ -313,12 +313,12 @@ QsciCommandSet::QsciCommandSet(QsciScintilla *qs) : qsci(qs)
             QT_TRANSLATE_NOOP("QsciCommand",
                     "Extend selection to end of next word")
         },
-        {
-            QsciCommand::WordPartLeft,
-            Qt::Key_Slash | Qt::CTRL,
-            0,
-            QT_TRANSLATE_NOOP("QsciCommand", "Move left one word part")
-        },
+//        {
+//            QsciCommand::WordPartLeft,
+//            Qt::Key_Slash | Qt::CTRL,
+//            0,
+//            QT_TRANSLATE_NOOP("QsciCommand", "Move left one word part")
+//        },
         {
             QsciCommand::WordPartLeftExtend,
             Qt::Key_Slash | Qt::CTRL | Qt::SHIFT,
@@ -326,12 +326,12 @@ QsciCommandSet::QsciCommandSet(QsciScintilla *qs) : qsci(qs)
             QT_TRANSLATE_NOOP("QsciCommand",
                     "Extend selection left one word part")
         },
-        {
-            QsciCommand::WordPartRight,
-            Qt::Key_Backslash | Qt::CTRL,
-            0,
-            QT_TRANSLATE_NOOP("QsciCommand", "Move right one word part")
-        },
+//        {
+//            QsciCommand::WordPartRight,
+//            Qt::Key_Backslash | Qt::CTRL,
+//            0,
+//            QT_TRANSLATE_NOOP("QsciCommand", "Move right one word part")
+//        },
         {
             QsciCommand::WordPartRightExtend,
             Qt::Key_Backslash | Qt::CTRL | Qt::SHIFT,
@@ -808,18 +808,18 @@ QsciCommandSet::QsciCommandSet(QsciScintilla *qs) : qsci(qs)
             0,
             QT_TRANSLATE_NOOP("QsciCommand", "Formfeed")
         },
-        {
-            QsciCommand::Tab,
-            Qt::Key_Tab,
-            0,
-            QT_TRANSLATE_NOOP("QsciCommand", "Indent one level")
-        },
-        {
-            QsciCommand::Backtab,
-            Qt::Key_Tab | Qt::SHIFT,
-            0,
-            QT_TRANSLATE_NOOP("QsciCommand", "De-indent one level")
-        },
+//        {
+//            QsciCommand::Tab,
+//            Qt::Key_Tab,
+//            0,
+//            QT_TRANSLATE_NOOP("QsciCommand", "Indent one level")
+//        },
+//        {
+//            QsciCommand::Backtab,
+//            Qt::Key_Tab | Qt::SHIFT,
+//            0,
+//            QT_TRANSLATE_NOOP("QsciCommand", "De-indent one level")
+//        },
         {
             QsciCommand::Cancel,
             Qt::Key_Escape,
@@ -866,10 +866,11 @@ QsciCommandSet::QsciCommandSet(QsciScintilla *qs) : qsci(qs)
                 k + (QsciScintillaBase::SCMOD_CTRL << 16),
                 QsciScintillaBase::SCI_NULL);
 
-    for (int i = 0; i < sizeof (cmd_table) / sizeof (cmd_table[0]); ++i)
+    for (int i = 0; i < sizeof (cmd_table) / sizeof (cmd_table[0]); ++i) {
         cmds.append(
                 new QsciCommand(qsci, cmd_table[i].cmd, cmd_table[i].key,
                         cmd_table[i].altkey, cmd_table[i].desc));
+    }
 }
 
 

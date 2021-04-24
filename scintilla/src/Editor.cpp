@@ -1712,7 +1712,7 @@ void Editor::RefreshPixMaps(Surface *surfaceWindow) {
 }
 
 void Editor::Paint(Surface *surfaceWindow, PRectangle rcArea) {
-	//Platform::DebugPrintf("Paint:%1d (%3d,%3d) ... (%3d,%3d)\n",
+    //Platform::DebugPrintf("Paint:%1d (%3d,%3d) ... (%3d,%3d)\n",
 	//	paintingAllText, rcArea.left, rcArea.top, rcArea.right, rcArea.bottom);
 	AllocateGraphics();
 
@@ -6533,14 +6533,6 @@ sptr_t Editor::WndProc(unsigned int iMessage, uptr_t wParam, sptr_t lParam) {
 
 	case SCI_GETINDENT:
 		return pdoc->indentInChars;
-
-    case SCI_CUSTOM_INDENT:
-        this->Indent(true);
-        break;
-
-    case SCI_CUSTOM_UNINDENT:
-        this->Indent(false);
-        break;
 
 	case SCI_SETUSETABS:
 		pdoc->useTabs = wParam != 0;

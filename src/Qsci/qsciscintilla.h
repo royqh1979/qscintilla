@@ -864,6 +864,13 @@ public:
     //! \sa setCursorPosition()
     void getCursorPosition(int *line, int *index) const;
 
+    //! \overload
+    //!
+    //! Sets \a *pos to the position of the cursor.
+    //!
+    //! \sa setCursorPosition()
+    int getCursorPosition() const;
+
     //! If there is a selection, \a *lineFrom is set to the line number in
     //! which the selection begins and \a *lineTo is set to the line number in
     //! which the selection ends.  (They could be the same.)  \a *indexFrom is
@@ -982,6 +989,15 @@ public:
 
     //! Returns the number of lines of text.
     int lines() const;
+
+    //! Returns position of the start of the line
+    int lineStart(int line) const;
+
+    //! Returns position of the end of the line
+    int lineEnd(int line) const;
+
+    //! Returns position of the end of the line's indent
+    int lineIndentPosition(int line) const;
 
     //! Returns the length of the text edit's text in bytes.  In order to get
     //! the length in characters use text().length().
@@ -1695,8 +1711,9 @@ public slots:
     //! \sa unindent()
     virtual void indent(int line);
 
-    //! Increases the indentation of the current selected block.
+    //! \overload
     //!
+    //! Increases the indentation of the current selected block.
     //! \sa unindent()
     virtual void indent();
 
@@ -1849,6 +1866,13 @@ public slots:
     //! \sa getCursorPosition()
     virtual void setCursorPosition(int line, int index);
 
+    //! \overload
+    //!
+    //! Sets the cursor to the position \a pos.
+    //!
+    //! \sa getCursorPosition()
+    virtual void setCursorPosition(int pos);
+
     //! Sets the end-of-line mode to \a mode.  The default is the platform's
     //! natural mode.
     //!
@@ -1979,6 +2003,15 @@ public slots:
     virtual void setSelection(int lineFrom, int indexFrom, int lineTo,
             int indexTo);
 
+    //! \overload
+    //!
+    //! Sets the selection which starts at position \a posFrom
+    //! and ends at position \a posTo.  The
+    //! cursor is moved to position \a posTo.
+    //!
+    //! \sa getSelection()
+    virtual void setSelection(int posFrom, int posTo);
+
     //! Sets the background colour, including the alpha component, of selected
     //! text to \a col.
     //!
@@ -2044,6 +2077,8 @@ public slots:
     //! \sa indent()
     virtual void unindent(int line);
 
+    //! \overload
+    //!
     //! Decreases the indentation of the current selected block.
     //!
     //! \sa indent()
@@ -2079,6 +2114,9 @@ public slots:
     //! \sa zoomIn(), zoomOut()
     virtual void zoomTo(int size);
 
+    //! Toggle the selection to/from commets
+    void toggleComment();
+
 signals:
     //! This signal is emitted whenever the cursor position changes.  \a line
     //! contains the line number and \a index contains the character index
@@ -2113,7 +2151,20 @@ signals:
     void indicatorReleased(int line, int index, Qt::KeyboardModifiers state);
 
     //! This signal is emitted whenever the number of lines of text changes.
-    void linesChanged();
+    //! \a startLine is the line where text is modified. \a count is the count
+    //! of changed lines. if \a count is greater than zero, then lines are
+    //! added; otherwise lined are removed
+    void linesChanged(int startLine, int count);
+
+    //! This signal is emitted whenever the number of lines of text increased.
+    //! \a startLine is the line where new text is inserted. \a count is the count
+    //! of added lines.
+    void linesAdded();
+
+    //! This signal is emitted whenever the number of lines of text decreased.
+    //! \a startLine is the line where text is removed. \a count is the count
+    //! of removed lines.
+    void linesRemoved(int startLine, int count);
 
     //! This signal is emitted whenever the user clicks on a sensitive margin.
     //! \a margin is the margin.  \a line is the number of the line where the
